@@ -20,8 +20,8 @@ const parole = {
 
 form.addEventListener(`submit`, function (e) {
     e.preventDefault()
-
-    if (email.value === `` || password.value === ``) {
+    login(email.value, password.value)
+    /*if (email.value === `` || password.value === ``) {
         alert("E-pasts vai parole nav ievadīti!");
 
     } else if (password.value.length <= 4) {
@@ -34,7 +34,7 @@ form.addEventListener(`submit`, function (e) {
 
     } else {
         hideNShow();
-    }
+    }*/
 });
 
 
@@ -56,43 +56,53 @@ const hideNShow = () => {
 
     btn.addEventListener('click', () => {
 
-        if (name.value === ``) {
-            return alert(`Vārds nav ievadīts!`);
-        } else if (!upperCase(name.value)) {
-            return alert(`Vārdam jasākas ar lielo burtu!`);
+        contactform(name.value, surname.value, email.value, address.value, number.value, tema.value, zina.value)
 
-        } else if (surname.value === ``) {
-            return alert(`Uzvārds nav ievadīts!`);
-        } else if (!upperCase(surname.value)) {
-            return alert(`Uzvārdam jasākas ar lielo burtu!`);
+        function contactform(name, surname, email, address, number, tema, zina) {
+            if (name === ``) {
+                return alert(`Vārds nav ievadīts!`);
+            } else if (!upperCase(name)) {
+                return alert(`Vārdam jasākas ar lielo burtu!`);
 
-        } else if (email.value === ``) {
-            return alert(`E-pasts nav ievadīts!`);
+            } else if (surname === ``) {
+                return alert(`Uzvārds nav ievadīts!`);
+            } else if (!upperCase(surname)) {
+                return alert(`Uzvārdam jasākas ar lielo burtu!`);
 
-        } else if (address.value === ``) {
-            return alert(`Adrese nav ievadīta!`);
-        } else if (!upperCase(address.value)) {
-            return alert(`Adresei jasākas ar lielo burtu!`);
+            } else if (email === ``) {
+                return alert(`E-pasts nav ievadīts!`);
 
-        } else if (number.value === ``) {
-            return alert(`Numurs nav ievadīts!`);
-        } else if (number.value.length > 8 || number.value.length < 8) {
-            return alert(`Numurs sastāv no 8 cipariem!`);
+            } else if (address === ``) {
+                return alert(`Adrese nav ievadīta!`);
+            } else if (!upperCase(address)) {
+                return alert(`Adresei jasākas ar lielo burtu!`);
 
-        } else if (tema.value === ``) {
-            return alert(`Tēma nav ievadīta!`);
+            } else if (number === ``) {
+                return alert(`Numurs nav ievadīts!`);
+            } else if (number.length > 8 || number.length < 8) {
+                return alert(`Numurs sastāv no 8 cipariem!`);
 
-        } else if (zina.value === ``) {
-            return alert(`Ziņa nav ievadīta!`);
+            } else if (tema === ``) {
+                return alert(`Tēma nav ievadīta!`);
+
+            } else if (zina === ``) {
+                return alert(`Ziņa nav ievadīta!`);
+
+            } else {
+                fetchs();
+            }
         }
 
-        fetch('https://kontaktforma.herokuapp.com', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "name": name.value, "surname": surname.value, "email": email.value, "address": address.value, "number": number.value, "theme": theme.value, "message": message.value })
-        }).then(alert("Jūsu ziņa bija aizsutīta!"))
+        function fetchs() {
+
+            fetch('https://kontaktforma.herokuapp.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "name": name.value, "surname": surname.value, "email": email.value, "address": address.value, "number": number.value, "theme": theme.value, "message": message.value })
+            }).then(alert("Jūsu ziņa bija aizsutīta!"))
+        }
     })
 }
 
@@ -122,3 +132,19 @@ const form2 = `<div id="forma" class="container2">
 </div>
 `;
 
+function login(email, password) {
+    if (email === `` || password === ``) {
+        alert("E-pasts vai parole nav ievadīti!");
+
+    } else if (password.length <= 4) {
+        alert("Parole sastāv no vismaz 5 simboliem!");
+    } else if (password.length >= 15) {
+        alert("Parole sastāv līdz 15 simboliem!");
+
+    } else if (email !== epasts.email1 && password !== parole.parole2 || email !== epasts.email2 && password !== parole.parole1) {
+        alert("E-pasts vai parole nav pareizi!");
+
+    } else {
+        hideNShow();
+    }
+}
